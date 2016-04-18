@@ -7,8 +7,11 @@ package Windows.UI.Xaml.Controls;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import run.ace.*;
+import android.view.Gravity;
+import android.graphics.Color;
 
 public class ViewGroupHelper {
 	public static boolean setProperty(ViewGroup instance, String propertyName, Object propertyValue) {
@@ -37,13 +40,15 @@ public class ViewGroupHelper {
                 // Automatically reparent, since Android is a bit pickier about this compared to iOS
                 Object parent = content.getParent();
                 if (parent instanceof ViewGroup) {
-                    ((ViewGroup)parent).removeView(content);
+                    //((ViewGroup)parent).removeView(content);
                 }
 
 				// Stretch to fill
+				/*
 				content.setLayoutParams(new android.widget.FrameLayout.LayoutParams(
 					ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT));
+				*/
 
                 // When we're setting content on the root view, respect the title/appbars
                 if (instance == NativeHost.getRootView()) {
@@ -52,8 +57,17 @@ public class ViewGroupHelper {
                     }
                 }
 
+                if (instance instanceof Windows.UI.Xaml.Controls.Page) {
 
-				instance.addView(content);
+
+                	((Windows.UI.Xaml.Controls.Page) instance).setContent(content);
+
+					instance.addView(content);
+
+                } else {
+					instance.addView(content);                	
+                }
+
 			}
 			else {
 				TextView content = new TextView(instance.getContext());

@@ -4,26 +4,50 @@
 //-------------------------------------------------------------------------------------------------------
 package Windows.UI.Xaml.Controls;
 
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.AbsoluteLayout;
 import run.ace.NativeHost;
 import run.ace.TabBar;
+import android.view.Gravity;
+import android.graphics.Color;
 
-public class Page extends AbsoluteLayout implements IHaveProperties {
+public class Page extends FrameLayout implements IHaveProperties {
 
     public TabBar tabBar;
     public CommandBar menuBar;
     public String frameTitle;
+    public View content;
+    public View footer;
 
 	public Page(android.content.Context context) {
 		super(context);
 
         // Fill the area provided by the parent
-        this.setLayoutParams(new AbsoluteLayout.LayoutParams(
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT, 0, 0));
+            ViewGroup.LayoutParams.MATCH_PARENT
+        );
+		this.setLayoutParams(lp);
         
 	}
+
+    public View getContent() {
+        return content;
+    }
+
+    public void setContent(View content) {
+        this.content = content;
+    }
+
+    public View getFooter() {
+        return footer;
+    }
+
+    public void setFooter(View content) {
+        this.footer = footer;
+    }
 
 	// IHaveProperties.setProperty
 	public void setProperty(String propertyName, Object propertyValue)
@@ -60,6 +84,45 @@ public class Page extends AbsoluteLayout implements IHaveProperties {
             if (this.getParent() == NativeHost.getRootView()) {
                 updateTitle(NativeHost.getMainActivity());
             }
+        }
+        else if (propertyName.endsWith(".Footer")) {
+
+            if (propertyValue != null) {
+
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                );
+                lp.setMargins(0, 0, 0, 120);
+                this.content.setLayoutParams(lp);
+
+                FrameLayout footer = new FrameLayout(this.getContext());
+                FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    120,
+                    Gravity.BOTTOM
+                );
+                footer.setLayoutParams(lp2);    
+                footer.setBackgroundColor(Color.parseColor("#191919"));
+                this.setFooter(footer);
+                if (this.getChildAt(1) == null) {
+                    this.addView(footer);
+                }
+
+            } else {
+
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                );
+                lp.setMargins(0, 0, 0, 0);
+                this.content.setLayoutParams(lp);
+                if (this.getChildAt(1) != null) {
+                    this.removeViewAt(1);    
+                }
+                
+            }
+
         }
 		else if (!ViewGroupHelper.setProperty(this, propertyName, propertyValue)) {
 			throw new RuntimeException("Unhandled property for " + this.getClass().getSimpleName() + ": " + propertyName);

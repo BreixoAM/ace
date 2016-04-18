@@ -1,4 +1,3 @@
-cordova.define("cordova-plugin-ace.Page", function(require, exports, module) {
 //-------------------------------------------------------------------------------------------------------
 // Copyright (C) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE.txt file in the project root for full license information.
@@ -30,5 +29,3 @@ Page.prototype.getTitle = function () { return this.get("Frame.Title"); };
 Page.prototype.setTitle = function (title) { this.set("Frame.Title", title); };
 
 module.exports = Page;
-
-});

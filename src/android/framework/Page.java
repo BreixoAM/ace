@@ -19,9 +19,10 @@ public class Page extends AbsoluteLayout implements IHaveProperties {
 		super(context);
 
         // Fill the area provided by the parent
-		this.setLayoutParams(new AbsoluteLayout.LayoutParams(
-			ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.MATCH_PARENT, 0, 0));
+        this.setLayoutParams(new AbsoluteLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT, 0, 0));
+        
 	}
 
 	// IHaveProperties.setProperty
@@ -32,13 +33,16 @@ public class Page extends AbsoluteLayout implements IHaveProperties {
             //       and also handling invalidations inside buttons, etc.
             if (propertyValue instanceof TabBar) {
                 tabBar = (TabBar)propertyValue;
+                ((TabBar)propertyValue).show(NativeHost.getMainActivity());
             }
             else if (propertyValue instanceof CommandBar) {
                 menuBar = (CommandBar)propertyValue;
             }
             else if (propertyValue == null) {
                 tabBar = null;
-                menuBar = null;
+                //menuBar = null;
+                TabBar.remove(NativeHost.getMainActivity());
+                //CommandBar.remove(NativeHost.getMainActivity(), NativeHost.getRootMenu());
             }
             else {
     			throw new RuntimeException("Unhandled value for BottomAppBar: " + propertyValue);

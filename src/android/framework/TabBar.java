@@ -101,12 +101,16 @@ public class TabBar extends android.widget.LinearLayout implements
     public static void remove(android.app.Activity activity) {
         //if (!(activity instanceof ActionBarActivity)) {
             android.app.ActionBar mainActionBar = activity.getActionBar();
+            mainActionBar.removeAllTabs();
+            mainActionBar.setNavigationMode(android.app.ActionBar.NAVIGATION_MODE_STANDARD);
+            /*
             if (mainActionBar != null) {
                 mainActionBar.hide();
                 mainActionBar.setTitle(null);
                 mainActionBar.removeAllTabs();
                 return;
             }
+            */
         //}
         //else {
         //    ActionBar actionBar = ((ActionBarActivity)activity).getSupportActionBar();

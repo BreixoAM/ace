@@ -59,10 +59,7 @@ public class ViewGroupHelper {
 
                 if (instance instanceof Windows.UI.Xaml.Controls.Page) {
 
-
-                	((Windows.UI.Xaml.Controls.Page) instance).setContent(content);
-
-					instance.addView(content);
+					((Windows.UI.Xaml.Controls.Page) instance).show(content);
 
                 } else {
 					instance.addView(content);                	

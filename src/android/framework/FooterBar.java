@@ -35,33 +35,34 @@ public class FooterBar extends android.widget.LinearLayout implements
 
     public void show(Page page) {
 
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        );
+        if (page.getLayout().getChildAt(1) == null) {
 
-        lp.setMargins(0, 0, 0, 100);
-        page.getContent().setLayoutParams(lp);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            );
 
-        FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            100,
-            Gravity.BOTTOM
-        );
-        this.setLayoutParams(lp2);    
-        this.setBackgroundColor(Color.parseColor("#191919"));
+            lp.setMargins(0, 0, 0, 100);
+            page.getLayout().getChildAt(0).setLayoutParams(lp);
 
-        if (_primaryCommands != null) {
-            for (int i = 0; i < _primaryCommands.size(); i++) {
-                AppBarButton abb = (AppBarButton)_primaryCommands.get(i);
-                abb.setText(abb.label);
-                this.addView(abb);
+            FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                100,
+                Gravity.BOTTOM
+            );
+            this.setLayoutParams(lp2);    
+            this.setBackgroundColor(Color.parseColor("#191919"));
+
+            if (_primaryCommands != null) {
+                for (int i = 0; i < _primaryCommands.size(); i++) {
+                    AppBarButton abb = (AppBarButton)_primaryCommands.get(i);
+                    abb.setText(abb.label);
+                    this.addView(abb);
+                }
             }
-        }
 
-        if (page.getChildAt(1) == null) {
-            page.addView(this);
-            page.setFooter(this);
+            page.getLayout().addView(this);
+
         }
 
 	}
@@ -73,9 +74,9 @@ public class FooterBar extends android.widget.LinearLayout implements
             ViewGroup.LayoutParams.MATCH_PARENT
         );
         lp.setMargins(0, 0, 0, 0);
-        page.getContent().setLayoutParams(lp);
-        if (page.getChildAt(1) != null) {
-            page.removeViewAt(1);    
+        page.getLayout().getChildAt(0).setLayoutParams(lp);
+        if (page.getLayout().getChildAt(1) != null) {
+            page.getLayout().removeViewAt(1);    
         }
 
 	}

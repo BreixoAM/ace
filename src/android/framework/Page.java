@@ -6,6 +6,7 @@ package Windows.UI.Xaml.Controls;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.support.v4.widget.DrawerLayout;
 import android.widget.FrameLayout;
 import android.widget.AbsoluteLayout;
 import run.ace.NativeHost;
@@ -14,23 +15,34 @@ import run.ace.FooterBar;
 import android.view.Gravity;
 import android.graphics.Color;
 
-public class Page extends FrameLayout implements IHaveProperties {
+public class Page extends DrawerLayout implements IHaveProperties {
 
     public TabBar tabBar;
     public CommandBar menuBar;
     public String frameTitle;
+    public FrameLayout layout;
+    public FrameLayout menu;
     public View content;
     public FooterBar footer;
 
-	public Page(android.content.Context context) {
-		super(context);
+    public android.content.Context mContext;
 
+	public Page(android.content.Context context) {
+
+		super(context);
+        FrameLayout layout = new FrameLayout(context);
+        this.layout = layout;
+        FrameLayout menu = new FrameLayout(context);
+        this.menu = menu;
+
+/*
         // Fill the area provided by the parent
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         );
 		this.setLayoutParams(lp);
+*/
         
 	}
 
@@ -43,12 +55,46 @@ public class Page extends FrameLayout implements IHaveProperties {
     }
 
     public View getFooter() {
-        return footer;
+        return this.footer;
     }
 
-    public void setFooter(View content) {
+    public void setFooter(FooterBar footer) {
         this.footer = footer;
     }
+
+    public FrameLayout getLayout() {
+        return this.layout;
+    }
+
+    public void setLayout(FrameLayout layout) {
+        this.layout = layout;
+    }
+
+    public void show(View content) {
+
+        this.layout.addView(content);
+        this.addView(this.layout);
+
+        DrawerLayout.LayoutParams lp2 = new DrawerLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            Gravity.LEFT
+        );
+        this.menu.setLayoutParams(lp2);    
+        this.menu.setBackgroundColor(Color.parseColor("#191919"));
+        this.addView(this.menu);
+
+    }
+
+/*
+    public View getLayout() {
+        return this.layout;
+    }
+
+    public void setLayout(FrameLayout layout) {
+        this.layout = layout;
+    }
+*/
 
 	// IHaveProperties.setProperty
 	public void setProperty(String propertyName, Object propertyValue)

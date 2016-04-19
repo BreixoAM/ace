@@ -193,6 +193,9 @@
   <js-module src="www/framework/TabBar.js">
     <merges target="ace.TabBar" />
   </js-module>
+  <js-module src="www/framework/FooterBar.js">
+    <merges target="ace.FooterBar" />
+  </js-module>
   <js-module src="www/framework/TableView.js">
     <merges target="ace.TableView" />
   </js-module>

@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.AbsoluteLayout;
 import run.ace.NativeHost;
 import run.ace.TabBar;
+import run.ace.FooterBar;
 import android.view.Gravity;
 import android.graphics.Color;
 
@@ -19,7 +20,7 @@ public class Page extends FrameLayout implements IHaveProperties {
     public CommandBar menuBar;
     public String frameTitle;
     public View content;
-    public View footer;
+    public FooterBar footer;
 
 	public Page(android.content.Context context) {
 		super(context);
@@ -89,37 +90,13 @@ public class Page extends FrameLayout implements IHaveProperties {
 
             if (propertyValue != null) {
 
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                );
-                lp.setMargins(0, 0, 0, 120);
-                this.content.setLayoutParams(lp);
-
-                FrameLayout footer = new FrameLayout(this.getContext());
-                FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    120,
-                    Gravity.BOTTOM
-                );
-                footer.setLayoutParams(lp2);    
-                footer.setBackgroundColor(Color.parseColor("#191919"));
-                this.setFooter(footer);
-                if (this.getChildAt(1) == null) {
-                    this.addView(footer);
-                }
+                footer = (FooterBar)propertyValue;
+                ((FooterBar)propertyValue).show(this);
 
             } else {
 
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                );
-                lp.setMargins(0, 0, 0, 0);
-                this.content.setLayoutParams(lp);
-                if (this.getChildAt(1) != null) {
-                    this.removeViewAt(1);    
-                }
+                footer = (FooterBar)propertyValue;
+                ((FooterBar)propertyValue).remove(this);
                 
             }
 

@@ -533,6 +533,7 @@
     <source-file src="src/android/framework/StaticResource.java" target-dir="src/run/ace/framework" />
     <source-file src="src/android/framework/Style.java" target-dir="src/run/ace/framework" />
     <source-file src="src/android/framework/TabBar.java" target-dir="src/run/ace/framework" />
+    <source-file src="src/android/framework/FooterBar.java" target-dir="src/run/ace/framework" />
     <source-file src="src/android/framework/TextBlock.java" target-dir="src/run/ace/framework" />
     <source-file src="src/android/framework/Thickness.java" target-dir="src/run/ace/framework" />
     <source-file src="src/android/framework/TimePicker.java" target-dir="src/run/ace/framework" />
